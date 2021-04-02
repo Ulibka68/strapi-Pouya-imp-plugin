@@ -4,14 +4,15 @@
  *
  */
 
-import React, { memo } from 'react';
-// import PropTypes from 'prop-types';
-import pluginId from '../../pluginId';
+import React, { memo, Component } from "react";
+import {request} from "strapi-helper-plugin";
+import PropTypes from "prop-types";
+import pluginId from "../../pluginId";
 import UploadFileForm from "../../components/UploadFileForm";
 
-
-const HomePage = () => {
-  return <UploadFileForm />;
-};
-
+class HomePage extends Component {
+  render() {
+    return <UploadFileForm />;
+  };
+}
 export default memo(HomePage);
