@@ -24,7 +24,14 @@ const getUrl = to =>
   to ? `/plugins/${pluginId}/${to}` : `/plugins/${pluginId}`;
 
 class HomePage extends Component {
+  importSources = [
+    { label: "External URL ", value: "url" },
+    { label: "Upload file", value: "upload" },
+    { label: "Raw text", value: "raw" }
+  ];
+
   state = {
+    importSource: "upload",
     analyzing: false,
     analysis: null
   };
@@ -52,7 +59,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className={"container-fluid"} style={{padding: "18px 30px"}}>
+      <div className={"container-fluid"} style={{ padding: "18px 30px" }}>
         <PluginHeader
           title={"Import Content"}
           description={"Import CSV and RSS-Feed into your Content Types"}
@@ -68,14 +75,24 @@ class HomePage extends Component {
               to: getUrl("history")
             }
           ]}
-          style={{marginTop: "4.4rem"}}
+          style={{ marginTop: "4.4rem" }}
         />
         <div className="row">
           <Block
             title="General"
             description="Configure the Import Source & Destination"
-            style={{marginBottom: 12}}
+            style={{ marginBottom: 12 }}
           >
+            <Row className={"row"}>
+              <div className={"col-4"}>
+                <Label htmlFor="importSource">Import Source</Label>
+                <Select
+                  name="importSource"
+                  options={this.importSources}
+                  value={this.state.importSource}
+                />
+              </div>
+            </Row>
             <UploadFileForm
               onRequestAnalysis={this.onRequestAnalysis}
               loadingAnalysis={this.state.analyzing}
