@@ -31,9 +31,59 @@ class HomePage extends Component {
   ];
 
   state = {
+    loading: true,
+    modelOptions: [],
+    models: [],
     importSource: "upload",
     analyzing: false,
     analysis: null
+  };
+
+  componentDidMount() {
+    this.getModels().then(res => {
+      const { models, modelOptions } = res;
+      console.log('HomePage componentDidMount',models,modelOptions);
+      console.log('selectedContentType : ',modelOptions[0].value )
+      this.setState({
+        models,
+        modelOptions,
+        selectedContentType: modelOptions ? modelOptions[0].value : ""
+      });
+    });
+  }
+
+  getModels = async () => {
+    this.setState({ loading: true });
+    try {
+      const response = await request("/content-type-builder/content-types", {
+        method: "GET"
+      });
+
+      // Remove non-user content types from models
+      const models = get(response, ["data"], []).filter(
+        obj => !has(obj, "plugin")
+      );
+      const modelOptions = models.map(model => {
+        return {
+          label: get(model, ["schema", "name"], ""), // (name is used for display_name)
+          value: model.uid // (uid is used for table creations)
+        };
+      });
+
+      this.setState({ loading: false });
+
+      return { models, modelOptions };
+    } catch (e) {
+      console.error(e);
+      this.setState({ loading: false }, () => {
+        strapi.notification.error(`${e}`);
+      });
+    }
+    return [];
+  };
+
+  selectImportSource = importSource => {
+    this.setState({ importSource });
   };
 
   onRequestAnalysis = async analysisConfig => {
@@ -90,6 +140,9 @@ class HomePage extends Component {
                   name="importSource"
                   options={this.importSources}
                   value={this.state.importSource}
+                  onChange={({ target: { value } }) =>
+                    this.selectImportSource(value)
+                  }
                 />
               </div>
             </Row>
