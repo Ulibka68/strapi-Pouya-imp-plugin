@@ -7,14 +7,11 @@
 import React, { memo } from 'react';
 // import PropTypes from 'prop-types';
 import pluginId from '../../pluginId';
+import UploadFileForm from "../../components/UploadFileForm";
+
 
 const HomePage = () => {
-  return (
-    <div>
-      <h1>{pluginId}&apos;s HomePage</h1>
-      <p>Happy coding</p>
-    </div>
-  );
+  return <UploadFileForm />;
 };
 
 export default memo(HomePage);
