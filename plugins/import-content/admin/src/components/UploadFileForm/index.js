@@ -49,12 +49,33 @@ class UploadFileForm extends Component {
     this.onChangeImportFile(file);
   };
 
+  readFileContent = file => {
+    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.onload = event => resolve(event.target.result);
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
+  };
+
+  clickAnalyzeUploadFile = async () => {
+    const { file, options } = this.state;
+    const data = file && (await this.readFileContent(file));
+    data &&
+    this.props.onRequestAnalysis({
+      source: "upload",
+      type: file.type,
+      options,
+      data
+    });
+  };
 
   render() {
     return (
       <div className={"col-12"}>
         <Row className={"row"}>
           <Label
+            showLoader={this.props.loadingAnalysis}
             isDragging={this.state.isDragging}
             onDrop={this.handleDrop}
             onDragEnter={this.handleDragEnter}
@@ -132,12 +153,13 @@ class UploadFileForm extends Component {
             />
           </Label>
         </Row>
-        {/*---HERE---*/}
+
         <Row className={"row"}>
           <Button
             label={"Analyze"}
             color={this.state.file ? "secondary" : "cancel"}
             disabled={!this.state.file}
+            onClick={this.clickAnalyzeUploadFile}
           />
         </Row>
       </div>
@@ -146,6 +168,8 @@ class UploadFileForm extends Component {
 }
 
 UploadFileForm.propTypes = {
+  onRequestAnalysis: PropTypes.func.isRequired,
+  loadingAnalysis: PropTypes.bool.isRequired
 };
 
 export default UploadFileForm;
