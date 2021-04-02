@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/preAnalyzeImportFile",
+      "handler": "ImportContent.preAnalyzeImportFile",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
