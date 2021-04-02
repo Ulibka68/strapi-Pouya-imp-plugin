@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import P from "../P";
 import Row from "../Row";
 import Label from "../Label";
+import { Button } from "@buffetjs/core";
 
 // import Button from 'components/Button';
 // import Label from 'components/Label';
@@ -130,6 +131,14 @@ class UploadFileForm extends Component {
               type="file"
             />
           </Label>
+        </Row>
+        {/*---HERE---*/}
+        <Row className={"row"}>
+          <Button
+            label={"Analyze"}
+            color={this.state.file ? "secondary" : "cancel"}
+            disabled={!this.state.file}
+          />
         </Row>
       </div>
     );
