@@ -4,10 +4,13 @@
 Pouya Miralayi
 
 https://strapi.io/blog/how-to-create-an-import-content-plugin-part-1-4  
-https://strapi.io/blog/how-to-create-an-import-content-plugin-part-2-4
+https://strapi.io/blog/how-to-create-an-import-content-plugin-part-2-4  
+https://strapi.io/blog/how-to-create-an-import-content-plugin-part-3-4  
 
-https://github.com/jbeuckm/strapi-plugin-import-content
+### Github
+https://github.com/strapi/community-content/tree/master/tutorials/code/import-content-plugin-tutorial
 
-strapi generate:plugin import-content
-strapi generate:model importconfig --plugin import-content
+### Начальные шаги
+strapi generate:plugin import-content  
+strapi generate:model importconfig --plugin import-content  
 strapi generate:model importeditem --plugin import-content
